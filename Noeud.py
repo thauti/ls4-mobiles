@@ -1,7 +1,41 @@
+from Mobile import *
 class Noeud():
+
 	"Défini un noeud"
+
 	def __init__(self, n_droit=None, n_gauche=None):
 		self.n_droit=n_droit
 		self.n_gauche=n_gauche
+
 	def toText(self):
 		return [self.n_gauche.toText(), self.n_droit.toText()]
+
+	def construire_fichier_arbre(self, liste):
+		print("o")
+		if(type(liste[0]) is list):
+			self.n_gauche = Noeud()
+			self.n_gauche.construire_fichier_arbre(liste[0])
+		else:
+			self.n_gauche =  Mobile(int(liste[0]))
+
+		if(type(liste[1]) is list):
+			self.n_droit = Noeud()
+			self.n_droit.construire_fichier_arbre(liste[0])
+		else:
+			self.n_droit =  Mobile(int(liste[1]))
+
+	def getPoids(self):
+		""" Retourne le poids totale du noeud """
+		return self.n_gauche.getPoids()+self.n_droit.getPoids()
+
+	def afficher(self, canvas, x=0,y=0):
+
+		longueur = 100 # Longueur de la ligne
+
+		l1 = (self.n_gauche.getPoids()*100)/(self.n_gauche.getPoids()+self.n_droit.getPoids()) # Calcul de la longueur
+		l2 = longueur-l1 # Reste
+
+		canvas.create_line(x,y,x,y+50) # ligne horizontal
+		canvas.create_line(x-l1,y+50,x+(100-l1),y+50)
+		self.n_gauche.afficher(canvas, x-l1,y+50)
+		self.n_droit.afficher(canvas, x+l2,y+50)

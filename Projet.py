@@ -1,7 +1,10 @@
+from Mobile import *
 from Noeud import *
 from Arbre import *
-from Mobile import *
+from Fenetre import *
+from tkinter import *
 
+""" ESSAI 
 monArbre = Arbre()
 noeud = Noeud()
 noeud2 = Noeud()
@@ -17,8 +20,7 @@ noeud.n_gauche = noeud2
 
 monArbre.noeud = noeud
 
-print(monArbre.toText())
-
+"""
 
 """ 
 Represente
@@ -29,3 +31,8 @@ Represente
   /	 \
  5	  3
  """
+
+""" ESSAI 2 """
+
+Fen = Fenetre()
+Fen.mainloop()
