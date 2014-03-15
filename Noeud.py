@@ -20,7 +20,7 @@ class Noeud():
 
 		if(type(liste[1]) is list):
 			self.n_droit = Noeud()
-			self.n_droit.construire_fichier_arbre(liste[0])
+			self.n_droit.construire_fichier_arbre(liste[1])
 		else:
 			self.n_droit =  Mobile(int(liste[1]))
 

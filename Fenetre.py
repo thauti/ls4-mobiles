@@ -45,10 +45,9 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 	def convertir_en_arbre(self, texte):
 		"""Converti le fichier de type Arbre en objet arbre"""
-
+		print(texte)
 		self.arbre = Arbre()
 		self.arbre.construire_fichier_arbre(eval(texte[0]))
-		print(self.arbre.getPoids())
 
 	def afficher_arbre(self):
 		self.arbre.afficher(self.canvas)
