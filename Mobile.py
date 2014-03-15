@@ -13,4 +13,4 @@ class Mobile():
 	def afficher(self, canvas, x=0,y=0):
 		canvas.create_line(x,y,x,y+50)
 		y=y+50
-		canvas.create_oval(x-15-self.poids,y-15-self.poids,x+15+self.poids,y+15+self.poids)
+		canvas.create_oval(x-15-self.poids,y-15-self.poids,x+15+self.poids,y+15+self.poids, fill="blue")

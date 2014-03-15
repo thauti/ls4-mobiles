@@ -50,4 +50,6 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.arbre.construire_fichier_arbre(eval(texte[0]))
 
 	def afficher_arbre(self):
+		self.canvas.delete('all')
+		self.canvas.update()
 		self.arbre.afficher(self.canvas)
