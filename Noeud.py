@@ -36,6 +36,6 @@ class Noeud():
 		l2 = longueur-l1 # Reste
 		print("l1: ",l1," l2: ",l2)
 		canvas.create_line(x,y,x,y+50) # ligne horizontal
-		canvas.create_line(x-l1,y+50,x+l2,y+50)
-		self.n_gauche.afficher(canvas, x-l1,y+50)
-		self.n_droit.afficher(canvas, x+l2,y+50)
+		canvas.create_line(x-l2,y+50,x+l1,y+50)
+		self.n_gauche.afficher(canvas, x-l2,y+50)
+		self.n_droit.afficher(canvas, x+l1,y+50)

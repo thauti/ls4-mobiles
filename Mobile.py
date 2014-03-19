@@ -11,6 +11,12 @@ class Mobile():
 	def toText(self):
 		return self.poids
 	def afficher(self, canvas, x=0,y=0):
+		if self.poids < 5:
+			couleur = 'blue'
+		elif (self.poids < 10 and self.poids >= 5):
+			couleur = 'green'
+		else:
+			couleur = 'red'
 		canvas.create_line(x,y,x,y+50)
 		y=y+50
-		canvas.create_oval(x-15-self.poids,y-15-self.poids,x+15+self.poids,y+15+self.poids, fill="blue")
+		canvas.create_oval(x-15-self.poids,y-15-self.poids,x+15+self.poids,y+15+self.poids, fill=couleur)
