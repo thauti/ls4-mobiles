@@ -12,6 +12,7 @@ class Noeud():
 
 	def construire_fichier_arbre(self, liste):
 		print("o")
+		print(liste)
 		if(type(liste[0]) is list):
 			self.n_gauche = Noeud()
 			self.n_gauche.construire_fichier_arbre(liste[0])
@@ -28,14 +29,14 @@ class Noeud():
 		""" Retourne le poids totale du noeud """
 		return self.n_gauche.getPoids()+self.n_droit.getPoids()
 
-	def afficher(self, canvas, x=0,y=0):
-
-		longueur = 150 # Longueur de la ligne
+	def afficher(self, canvas, x=0,y=0,longueur=500):			
 
 		l1 = (self.n_gauche.getPoids()*longueur)/(self.n_gauche.getPoids()+self.n_droit.getPoids()) # Calcul de la longueur
 		l2 = longueur-l1 # Reste
 		print("l1: ",l1," l2: ",l2)
 		canvas.create_line(x,y,x,y+50) # ligne horizontal
 		canvas.create_line(x-l2,y+50,x+l1,y+50)
-		self.n_gauche.afficher(canvas, x-l2,y+50)
-		self.n_droit.afficher(canvas, x+l1,y+50)
+		if longueur > 50 :
+			longueur = longueur //2
+		self.n_gauche.afficher(canvas, x-l2,y+50,longueur)
+		self.n_droit.afficher(canvas, x+l1,y+50,longueur)

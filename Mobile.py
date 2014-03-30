@@ -1,3 +1,5 @@
+from math import sqrt
+
 class Mobile():
 
 	"""Implemente un Mobile"""
@@ -10,13 +12,13 @@ class Mobile():
 		return self.poids
 	def toText(self):
 		return self.poids
-	def afficher(self, canvas, x=0,y=0):
-		if self.poids < 5:
+	def afficher(self, canvas, x=0,y=0,longueur=0):
+		if self.poids < 20:
 			couleur = 'blue'
-		elif (self.poids < 10 and self.poids >= 5):
+		elif (self.poids < 100 and self.poids >=20 ):
 			couleur = 'green'
 		else:
 			couleur = 'red'
 		canvas.create_line(x,y,x,y+50)
 		y=y+50
-		canvas.create_oval(x-15-self.poids,y-15-self.poids,x+15+self.poids,y+15+self.poids, fill=couleur)
+		canvas.create_oval(x-3*sqrt(self.poids),y-3*sqrt(self.poids),x+3*sqrt(self.poids),y+3*sqrt(self.poids), fill=couleur)

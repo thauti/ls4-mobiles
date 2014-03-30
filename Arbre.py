@@ -21,4 +21,4 @@ class Arbre():
 		return self.noeud.getPoids()
 
 	def afficher(self,canvas):
-		self.noeud.afficher(canvas, 250,50)
+		self.noeud.afficher(canvas,500,50,400)
