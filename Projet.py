@@ -4,7 +4,7 @@ from Arbre import *
 from Fenetre import *
 from tkinter import *
 
-""" ESSAI 
+""" ESSAI(test)
 monArbre = Arbre()
 noeud = Noeud()
 noeud2 = Noeud()
