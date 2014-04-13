@@ -8,7 +8,10 @@ class Arbre():
 		self.noeud = n
 
 	def toText(self):
-		return self.noeud.toText()
+		if self.noeud==None :
+			return '[]'
+		else:
+			return str(self.noeud.toText())
 
 	def construire_fichier_arbre(self, liste):
 		"""Construit l'arbre depuis une liste de noeud et de poids"""

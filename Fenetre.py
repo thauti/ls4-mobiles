@@ -13,6 +13,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 		self.menufichier = Menu(self.menubar, tearoff=0)
 		self.menufichier.add_command(label="Ouvrir", command=self.ouvrir_ficher)
+		self.menufichier.add_command(label="Enregistrer", command=self.save_fichier)
 		self.menufichier.add_command(label="Quitter", command=self.destroy)
 		self.menubar.add_cascade(label="Fichier", menu=self.menufichier)
 
@@ -29,7 +30,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 		self.frame.pack(fill=BOTH, expand=1)
 		self.canvas.pack(fill=BOTH, expand=1)
-
+		self.arbre = Arbre() # On crée un arbre nulle
 	def ouvrir_ficher(self):
 
 		fichier = filedialog.askopenfile(parent=self, title="Ouvrir un mobile")
@@ -37,8 +38,14 @@ class Fenetre(Tk): #Héritage depuis Tk
 		if fichier:
 			self.selection_mode(fichier)
 			self.afficher_arbre()
-		fichier.close()
+			fichier.close()
 
+	def save_fichier(self):
+		print(self.arbre.toText())
+		fichier = filedialog.asksaveasfile(parent=self, title="Sauvegarder sous ...")
+		if fichier:
+			fichier.write(self.arbre.toText())
+			fichier.close()
 	def selection_mode(self, fichier):
 		"""On regarde quel est le type de fichier"""
 
@@ -54,9 +61,9 @@ class Fenetre(Tk): #Héritage depuis Tk
 				arbre_1 = self.mode_1(texte)
 				self.arbre = Arbre()
 				self.arbre.construire_fichier_arbre(arbre_1)
+				fichier.close()
 		except:							# Sinon erreur
 			print("Erreur: Ce fichier n'est pas valide")
-		fichier.close()
 
 	def convertir_en_arbre(self, texte):
 		"""Converti le fichier de type Arbre en objet arbre"""
