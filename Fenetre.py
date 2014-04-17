@@ -50,9 +50,11 @@ class Fenetre(Tk): #Héritage depuis Tk
 		fichier = filedialog.askopenfile(parent=self, title="Ouvrir un mobile")
 		# Si on a bien charger un fichier
 		if fichier:
-			self.selection_mode(fichier)
-			self.afficher_arbre()
-			fichier.close()
+			test = self.selection_mode(fichier)
+			if test == 1 :
+				self.afficher_arbre()
+			else :
+				fichier.close()
 
 	def save_fichier(self):
 		print(self.arbre.toText())
@@ -60,6 +62,12 @@ class Fenetre(Tk): #Héritage depuis Tk
 		if fichier:
 			fichier.write(self.arbre.toText())
 			fichier.close()
+
+	def safe_cast(self,val, to_type, default=None):
+		try :
+			return to_type(val)
+		except ValueError:
+			return default
 
 	def selection_mode(self, fichier):
 		"""On regarde quel est le type de fichier"""
@@ -70,10 +78,11 @@ class Fenetre(Tk): #Héritage depuis Tk
 		texte =  fichier.readlines() # On récupère le fichier en liste
 		texte = [line.rstrip() for line in texte]
 		texte[0] = premier_chara+texte[0] # On remet le premier charactère au début
+		
 		try:
 			if premier_chara == '[' : # Si il est du type Arbre
 				self.convertir_en_arbre(texte)
-			elif int(premier_chara) in range(0,10): # Si c'est un ensemble de poids
+			elif all(self.safe_cast(x,int) for x in texte) != None :  #Si c'est un ensemble de poids
 				if self.v.get() == 1 :
 					arbre_1 = self.mode_1(texte)
 				if self.v.get() == 2 :
@@ -82,10 +91,12 @@ class Fenetre(Tk): #Héritage depuis Tk
 					arbre_1 = self.mode_3(texte)
 				self.arbre = Arbre()
 				self.arbre.construire_fichier_arbre(arbre_1)
-				fichier.close()
+			fichier.close()
+			return 1
 		except:							# Sinon erreur
 			print("Erreur: Ce fichier n'est pas valide")
-		
+			fichier.close()
+			return 0	
 
 	def convertir_en_arbre(self, texte):
 		"""Converti le fichier de type Arbre en objet arbre"""
