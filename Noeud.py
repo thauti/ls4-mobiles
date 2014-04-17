@@ -13,15 +13,23 @@ class Noeud():
 	def construire_fichier_arbre(self, liste):
 		print("o")
 		print(liste)
+			
 		if(type(liste[0]) is list):
-			self.n_gauche = Noeud()
-			self.n_gauche.construire_fichier_arbre(liste[0])
+			if(len(liste[0])>1) :
+				self.n_gauche = Noeud()
+				self.n_gauche.construire_fichier_arbre(liste[0])
+			else :
+				self.n_gauche = Mobile(int(liste[0][0]))	
 		else:
 			self.n_gauche =  Mobile(int(liste[0]))
 
 		if(type(liste[1]) is list):
-			self.n_droit = Noeud()
-			self.n_droit.construire_fichier_arbre(liste[1])
+			if(len(liste[1])>1) :
+				self.n_droit = Noeud()
+				self.n_droit.construire_fichier_arbre(liste[1])	
+			else :
+				self.n_droit = Mobile(int(liste[1][0]))
+
 		else:
 			self.n_droit =  Mobile(int(liste[1]))
 
@@ -36,7 +44,7 @@ class Noeud():
 		print("l1: ",l1," l2: ",l2)
 		canvas.create_line(x,y,x,y+50) # ligne horizontal
 		canvas.create_line(x-l2,y+50,x+l1,y+50)
-		if longueur > 50 :
+		if longueur > 50:
 			longueur = longueur //2
 		self.n_gauche.afficher(canvas, x-l2,y+50,longueur)
 		self.n_droit.afficher(canvas, x+l1,y+50,longueur)
