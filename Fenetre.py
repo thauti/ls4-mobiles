@@ -83,20 +83,46 @@ class Fenetre(Tk): #Héritage depuis Tk
 			if premier_chara == '[' : # Si il est du type Arbre
 				self.convertir_en_arbre(texte)
 			elif all(self.safe_cast(x,int) for x in texte) != None :  #Si c'est un ensemble de poids
-				if self.v.get() == 1 :
-					arbre_1 = self.mode_1(texte)
-				if self.v.get() == 2 :
-					arbre_1 = self.mode_2(texte)
-				if self.v.get() == 3 :
-					arbre_1 = self.mode_3(texte)
 				self.arbre = Arbre()
+				self.construire_modechooser()
+				if self.mode == 1 :
+					arbre_1 = self.mode_1(texte)
+				if self.mode == 2 :
+					arbre_1 = self.mode_2(texte)
+				if self.mode == 3 :
+					arbre_1 = self.mode_3(texte)
 				self.arbre.construire_fichier_arbre(arbre_1)
 			fichier.close()
 			return 1
 		except:							# Sinon erreur
 			print("Erreur: Ce fichier n'est pas valide")
 			fichier.close()
-			return 0	
+			return 0
+
+	def construire_modechooser(self):
+		self.modechooser = Toplevel(self)
+		self.modechooser.title("Choisir le mode")
+
+		liste_label = Label(self.modechooser, text="Veuillez choisir le mode d'ouverture")
+		self.liste_mode = Listbox(self.modechooser)
+
+		for i in ['Mode 1', 'Mode 2', 'Mode 3']:
+			self.liste_mode.insert(END, i)
+		liste_bouton = Button(self.modechooser, text="Valider",command=self.choisir_mode)
+		liste_label.pack()
+		self.liste_mode.pack()
+		liste_bouton.pack()
+		self.modechooser.mainloop()
+
+	def choisir_mode(self):
+		dic = dict()
+		dic['Mode 1'] = 1
+		dic['Mode 2'] = 2
+		dic['Mode 3'] = 3
+		print("Mode", dic[self.liste_mode.get(ACTIVE)])
+		self.mode = dic[self.liste_mode.get(ACTIVE)]
+		self.modechooser.quit()
+		self.modechooser.destroy()
 
 	def convertir_en_arbre(self, texte):
 		"""Converti le fichier de type Arbre en objet arbre"""
