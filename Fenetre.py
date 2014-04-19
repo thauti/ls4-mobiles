@@ -227,17 +227,17 @@ class Fenetre(Tk): #Héritage depuis Tk
 		l2=[]
 
 		liste.sort()
-		l1.append(max(liste))
+		l1.append(liste[len(liste)-1])
 		liste=liste[:len(liste)-1]
-		l2.append(max(liste))
+		l2.append(liste[len(liste)-1])
 		liste=liste[:len(liste)-1]
 
 		while(len(liste)>0) :
 
 			if(sum(l1)>sum(l2)) :
-				l2.append(min(liste))
+				l2.append(liste[0])
 			else :
-				l1.append(min(liste))
+				l1.append(liste[0])
 			liste=liste[1:]
 		
 		return [self.traitement_mode_4(l1),self.traitement_mode_4(l2)]
