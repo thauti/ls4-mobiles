@@ -235,9 +235,9 @@ class Fenetre(Tk): #Héritage depuis Tk
 		while(len(liste)>0) :
 
 			if(sum(l1)>sum(l2)) :
-				l2.append(max(liste))
+				l2.append(min(liste))
 			else :
-				l1.append(max(liste))
-			liste=liste[:len(liste)-1]
+				l1.append(min(liste))
+			liste=liste[1:]
 		
 		return [self.traitement_mode_4(l1),self.traitement_mode_4(l2)]
