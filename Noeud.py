@@ -15,15 +15,18 @@ class Noeud():
 		print(liste)
 			
 		if(type(liste[0]) is list):
+			print("gauche")
 			if(len(liste[0])>1) :
 				self.n_gauche = Noeud()
 				self.n_gauche.construire_fichier_arbre(liste[0])
 			else :
 				self.n_gauche = Mobile(int(liste[0][0]))	
 		else:
+			print("gauche")
 			self.n_gauche =  Mobile(int(liste[0]))
 
 		if(type(liste[1]) is list):
+			print("droit")
 			if(len(liste[1])>1) :
 				self.n_droit = Noeud()
 				self.n_droit.construire_fichier_arbre(liste[1])	
@@ -31,6 +34,7 @@ class Noeud():
 				self.n_droit = Mobile(int(liste[1][0]))
 
 		else:
+			print("droit")
 			self.n_droit =  Mobile(int(liste[1]))
 
 	def getPoids(self):

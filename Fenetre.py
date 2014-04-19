@@ -51,7 +51,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 		# Si on a bien charger un fichier
 		if fichier:
 			test = self.selection_mode(fichier)
-			if test == 1 :
+			if test == 1:
 				self.afficher_arbre()
 			else :
 				fichier.close()
@@ -91,6 +91,9 @@ class Fenetre(Tk): #Héritage depuis Tk
 					arbre_1 = self.mode_2(texte)
 				if self.mode == 3 :
 					arbre_1 = self.mode_3(texte)
+				if self.mode == 4 :
+					arbre_1 = self.mode_4(texte)	
+				
 				self.arbre.construire_fichier_arbre(arbre_1)
 			fichier.close()
 			return 1
@@ -106,7 +109,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 		liste_label = Label(self.modechooser, text="Veuillez choisir le mode d'ouverture")
 		self.liste_mode = Listbox(self.modechooser)
 
-		for i in ['Mode 1', 'Mode 2', 'Mode 3']:
+		for i in ['Mode 1', 'Mode 2', 'Mode 3','Mode 4']:
 			self.liste_mode.insert(END, i)
 		liste_bouton = Button(self.modechooser, text="Valider",command=self.choisir_mode)
 		liste_label.pack()
@@ -115,10 +118,11 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.modechooser.mainloop()
 
 	def choisir_mode(self):
-		dic = dict()
+		dic = dict()	
 		dic['Mode 1'] = 1
 		dic['Mode 2'] = 2
 		dic['Mode 3'] = 3
+		dic['Mode 4'] = 4
 		print("Mode", dic[self.liste_mode.get(ACTIVE)])
 		self.mode = dic[self.liste_mode.get(ACTIVE)]
 		self.modechooser.quit()
@@ -196,13 +200,44 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 	def aleatoire (self) :
 		liste=[random.randrange(1,150) for i in range(random.randrange(2,20))]
-		n=random.randrange(1,3)
+		n=random.randrange(1,4)
 		if n==1 :
 			liste=self.mode_1(liste)
 		elif n == 2 :
 			liste=self.mode_2(liste)
-		else :
+		elif n == 3 :
 			liste=self.mode_3(liste)
+		else :
+			liste=self.mode_4(liste)
 		self.arbre = Arbre()
 		self.arbre.construire_fichier_arbre(liste)
 		self.afficher_arbre()
+
+	def mode_4(self,liste) :
+		liste = [ int(x) for x in liste]		
+		
+
+		return self.traitement_mode_4(liste)
+
+	def traitement_mode_4(self,liste) :
+		if len(liste)<2 :
+			return liste[0]
+
+		l1=[]
+		l2=[]
+
+		liste.sort()
+		l1.append(max(liste))
+		liste=liste[:len(liste)-1]
+		l2.append(max(liste))
+		liste=liste[:len(liste)-1]
+
+		while(len(liste)>0) :
+
+			if(sum(l1)>sum(l2)) :
+				l2.append(max(liste))
+			else :
+				l1.append(max(liste))
+			liste=liste[:len(liste)-1]
+		
+		return [self.traitement_mode_4(l1),self.traitement_mode_4(l2)]
