@@ -20,15 +20,12 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 		self.menuoutil = Menu(self.menubar, tearoff=0)		
 		self.menuoutil.add_command(label="Aleatoire", command=self.aleatoire)		
-		self.menubar.add_cascade(label="Outil", menu=self.menuoutil)
+		self.menubar.add_cascade(label="Outils", menu=self.menuoutil)
 
 		self.v = IntVar()
 		self.v.set(1)
 		self.menuoption = Menu(self.menubar, tearoff=0)
-		self.menuoption.add_radiobutton(label='Mode 1', var=self.v, value=1)
-		self.menuoption.add_radiobutton(label='Mode 2', var=self.v, value=2)
-		self.menuoption.add_radiobutton(label='Mode 3', var=self.v, value=3)				
-		self.menubar.add_cascade(label="Option", menu=self.menuoption)	
+
 
 		self.canvas = Canvas(self.frame, width=800, height=800, bg="white", scrollregion=(0,0,1500,1000))
 		self.xscrollbar = Scrollbar(self.frame, orient=HORIZONTAL, command=self.canvas.xview)
