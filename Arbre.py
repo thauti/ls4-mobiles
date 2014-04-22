@@ -25,3 +25,11 @@ class Arbre():
 
 	def afficher(self,canvas):
 		self.noeud.afficher(canvas,700,50,600)
+
+	def getObjPoids(self):
+		if self.noeud == None:
+			return '[]'
+		else:
+			liste = []
+			self.noeud.getObjPoids(liste)
+			return liste

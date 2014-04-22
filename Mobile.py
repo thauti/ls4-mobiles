@@ -22,3 +22,5 @@ class Mobile():
 		canvas.create_line(x,y,x,y+50)
 		y=y+50
 		canvas.create_oval(x-3*sqrt(self.poids),y-3*sqrt(self.poids),x+3*sqrt(self.poids),y+3*sqrt(self.poids), fill=couleur)
+	def getObjPoids(self,liste):
+			liste.extend([self])

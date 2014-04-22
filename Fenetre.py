@@ -19,7 +19,8 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.menubar.add_cascade(label="Fichier", menu=self.menufichier)
 
 		self.menuoutil = Menu(self.menubar, tearoff=0)		
-		self.menuoutil.add_command(label="Aleatoire", command=self.aleatoire)		
+		self.menuoutil.add_command(label="Aleatoire", command=self.aleatoire)
+		self.menuoutil.add_command(label="Modifier les valeurs", command=self.modif_val)
 		self.menubar.add_cascade(label="Outils", menu=self.menuoutil)
 
 		self.v = IntVar()
@@ -59,6 +60,13 @@ class Fenetre(Tk): #Héritage depuis Tk
 		if fichier:
 			fichier.write(self.arbre.toText())
 			fichier.close()
+
+	def modif_val(self):
+		liste_p = self.arbre.getObjPoids()
+		modifval = Toplevel(self)
+		modifval.title("Modifier les valeurs")
+		for p in liste_p:
+			print(p.poids)
 
 	def safe_cast(self,val, to_type, default=None):
 		try :
