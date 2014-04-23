@@ -54,5 +54,5 @@ class Noeud():
 		self.n_droit.afficher(canvas, x+l1,y+50,longueur)
 
 	def getObjPoids(self,liste):
-			self.n_droit.getObjPoids(liste)
 			self.n_gauche.getObjPoids(liste)
+			self.n_droit.getObjPoids(liste)

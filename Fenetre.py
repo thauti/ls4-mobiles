@@ -62,11 +62,42 @@ class Fenetre(Tk): #Héritage depuis Tk
 			fichier.close()
 
 	def modif_val(self):
-		liste_p = self.arbre.getObjPoids()
-		modifval = Toplevel(self)
-		modifval.title("Modifier les valeurs")
-		for p in liste_p:
-			print(p.poids)
+		if self.arbre != None:
+			self.liste_p = self.arbre.getObjPoids()
+		else:
+			self.liste_p = []
+		self.modifval = Toplevel(self)
+		self.modifval.minsize(200,200)
+		self.modifval.title("Modifier les valeurs")
+		bouton_reg = Button(self.modifval,text="Regenerer", command=self.regenerer)
+		self.liste_input = []
+		for i,l in enumerate(self.liste_p):
+			print(i, l.poids)
+			self.liste_input.append(StringVar())
+			self.liste_input[i].set(l.poids)
+			Label(self.modifval, text="Poids " +str(i)).grid(column=1,row=i)
+			Entry(self.modifval,textvariable=self.liste_input[i]).grid(column=2,row=i)
+
+			l.afficher_id(self.canvas, i)
+		bouton_reg.grid(column=1)
+		self.modifval.protocol('WM_DELETE_WINDOW', self.modif_val_suppr)
+		
+	def regenerer(self):
+		for a,b in enumerate(self.liste_p):
+			try:
+				if int(self.liste_input[a].get()) < 0:
+					self.liste_input[a].set(-int(self.liste_input[a].get()))
+				b.poids=int(self.liste_input[a].get())
+			except ValueError:
+				print("Valeur invalide")
+				b.poids = 10
+		self.afficher_arbre()
+		for a,b in enumerate(self.liste_p):
+			b.afficher_id(self.canvas, a)
+
+	def modif_val_suppr(self):
+		self.afficher_arbre()
+		self.modifval.destroy()
 
 	def safe_cast(self,val, to_type, default=None):
 		try :
