@@ -11,6 +11,7 @@ class Noeud():
 		return [self.n_gauche.toText(), self.n_droit.toText()]
 
 	def construire_fichier_arbre(self, liste):
+		""" Construit l'arbre à partir d'un fichier(liste)"""
 		print("o")
 		print(liste)
 			
@@ -38,11 +39,11 @@ class Noeud():
 			self.n_droit =  Mobile(int(liste[1]))
 
 	def getPoids(self):
-		""" Retourne le poids totale du noeud """
+		""" Retourne le poids total sur noeud """
 		return self.n_gauche.getPoids()+self.n_droit.getPoids()
 
 	def afficher(self, canvas, x=0,y=0,longueur=500):			
-
+		""" Dessine le noeud"""
 		l1 = (self.n_gauche.getPoids()*longueur)/(self.n_gauche.getPoids()+self.n_droit.getPoids()) # Calcul de la longueur
 		l2 = longueur-l1 # Reste
 		print("l1: ",l1," l2: ",l2)
@@ -54,5 +55,6 @@ class Noeud():
 		self.n_droit.afficher(canvas, x+l1,y+50,longueur)
 
 	def getObjPoids(self,liste):
+		""" Retourne les objets de ses fils"""
 			self.n_gauche.getObjPoids(liste)
 			self.n_droit.getObjPoids(liste)

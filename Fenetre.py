@@ -7,22 +7,27 @@ class Fenetre(Tk): #Héritage depuis Tk
 	def __init__(self):
 		
 		Tk.__init__(self) #Constructeur de la classe Hérité
+
+		# Titre de la fenêtre principale
 		self.title("Construction du mobile")
 		self.menubar = Menu(self)
 		
 		self.frame = Frame(self, bd=0)
 
+		# Menu Fichier
 		self.menufichier = Menu(self.menubar, tearoff=0)
 		self.menufichier.add_command(label="Ouvrir", command=self.ouvrir_ficher)
 		self.menufichier.add_command(label="Enregistrer", command=self.save_fichier)		
 		self.menufichier.add_command(label="Quitter", command=self.destroy)
 		self.menubar.add_cascade(label="Fichier", menu=self.menufichier)
 
+		# Menu Outils
 		self.menuoutil = Menu(self.menubar, tearoff=0)		
 		self.menuoutil.add_command(label="Aleatoire", command=self.aleatoire)
 		self.menuoutil.add_command(label="Modifier les valeurs", command=self.modif_val)
 		self.menubar.add_cascade(label="Outils", menu=self.menuoutil)
 
+		# Menu A propos
 		self.menuapropos = Menu(self.menubar, tearoff=0)
 		self.menuapropos.add_command(label="A propos", command=self.afficher_apropos)
 		self.menubar.add_cascade(label="A propos", menu=self.menuapropos)
@@ -31,7 +36,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.v.set(1)
 		self.menuoption = Menu(self.menubar, tearoff=0)
 
-
+		# Scroll
 		self.canvas = Canvas(self.frame, width=800, height=800, bg="white", scrollregion=(0,0,1500,1000))
 		self.xscrollbar = Scrollbar(self.frame, orient=HORIZONTAL, command=self.canvas.xview)
 		self.yscrollbar = Scrollbar(self.frame, command=self.canvas.yview)
@@ -46,13 +51,10 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.frame.pack(fill=BOTH, expand=1)
 		self.canvas.pack(fill=BOTH, expand=1)
 		self.arbre = Arbre() # On crée un arbre nulle
-	def afficher_apropos(self):
-		apropos = Toplevel(self)
-		apropos.title("A propos")
-		label = Label(apropos, text="Construction de Mobiles \n - LS4 - \n Jérome BETTINELLI - Thomas HAUTIER \n 2013-2014")
-		label.pack()
-	def ouvrir_ficher(self):
+	
 
+	def ouvrir_ficher(self):
+		"""Fonction d'ouverture de fichier(ouverture seulement) """
 		fichier = filedialog.askopenfile(parent=self, title="Ouvrir un mobile")
 		# Si on a bien charger un fichier
 		if fichier:
@@ -63,6 +65,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 				fichier.close()
 
 	def save_fichier(self):
+		""" Fonction de sauvegarde dans un fichier(écriture seulement) """
 		print(self.arbre.toText())
 		fichier = filedialog.asksaveasfile(parent=self, title="Sauvegarder sous ...")
 		if fichier:
@@ -70,27 +73,39 @@ class Fenetre(Tk): #Héritage depuis Tk
 			fichier.close()
 
 	def modif_val(self):
+		""" Création de la fenêtre de gestions des poids"""
 		if self.arbre != None:
 			self.liste_p = self.arbre.getObjPoids()
 		else:
 			self.liste_p = []
+		
 		self.modifval = Toplevel(self)
 		self.modifval.minsize(200,200)
 		self.modifval.title("Modifier les valeurs")
 		bouton_reg = Button(self.modifval,text="Regenerer", command=self.regenerer)
+		
 		self.liste_input = []
+
 		for i,l in enumerate(self.liste_p):
 			print(i, l.poids)
 			self.liste_input.append(StringVar())
 			self.liste_input[i].set(l.poids)
 			Label(self.modifval, text="Poids " +str(i)).grid(column=1,row=i)
 			Entry(self.modifval,textvariable=self.liste_input[i]).grid(column=2,row=i)
-
 			l.afficher_id(self.canvas, i)
 		bouton_reg.grid(column=1)
 		self.modifval.protocol('WM_DELETE_WINDOW', self.modif_val_suppr)
+	
+	def afficher_apropos(self):
+		""" Création de la fenêtre à propos"""
+		apropos = Toplevel(self)
+		apropos.title("A propos")
+		label = Label(apropos, text="Construction de Mobiles \n - LS4 - \n Jérome BETTINELLI - Thomas HAUTIER \n 2013-2014")
+		label.pack()
 		
 	def regenerer(self):
+		""" Mise à jour des poids après la modification de leurs valeurs """
+
 		for a,b in enumerate(self.liste_p):
 			try:
 				if int(self.liste_input[a].get()) < 0:
@@ -104,6 +119,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 			b.afficher_id(self.canvas, a)
 
 	def modif_val_suppr(self):
+		"""Supression de la fenêtre de changement des valeurs"""
 		self.afficher_arbre()
 		self.modifval.destroy()
 
@@ -115,8 +131,6 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 	def selection_mode(self, fichier):
 		"""On regarde quel est le type de fichier"""
-
-		#### AMELIORABLE ####
 
 		premier_chara = fichier.read(1) # On lit le premier charactère de la première ligne
 		texte =  fichier.readlines() # On récupère le fichier en liste
@@ -147,6 +161,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 			return 0
 
 	def construire_modechooser(self):
+		""" Boite de dialogue pour choisir l'algo"""
 		self.modechooser = Toplevel(self)
 		self.modechooser.title("Choisir le mode")
 
@@ -162,6 +177,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.modechooser.mainloop()
 
 	def choisir_mode(self):
+		""" Voir ci-dessus """
 		dic = dict()	
 		dic['Mode 1'] = 1
 		dic['Mode 2'] = 2
@@ -179,11 +195,13 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.arbre.construire_fichier_arbre(eval(texte[0]))
 
 	def afficher_arbre(self):
+		""" Fonction de mise à jour et d'affichage de l'arbre """
 		self.canvas.delete('all')
 		self.canvas.update()
 		self.arbre.afficher(self.canvas)
 
 	def mode_1(self,liste) :
+		""" Algo 1 : """
 		if len(liste) <= 2 :
 			return liste
 		milieu = len(liste)//2
@@ -193,6 +211,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 			return [self.mode_1(liste[:milieu]),self.mode_1(liste[milieu:])]
 
 	def mode_2(self,liste) :
+		""" Algo 2 : """
 		liste = [ int(x) for x in liste]
 		liste.sort()
 		
@@ -214,6 +233,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 
 	def mode_3(self,liste):
+		""" Algo 3 : """
 		liste = [ int(x) for x in liste]
 		liste.sort()
 		
@@ -243,6 +263,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 
 	def aleatoire (self) :
+		""" Géneration d'un arbre aleatoire"""
 		liste=[random.randrange(1,150) for i in range(random.randrange(2,20))]
 		n=random.randrange(1,4)
 		if n==1 :
@@ -258,6 +279,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.afficher_arbre()
 
 	def mode_4(self,liste) :
+		""" Algo 4 : """
 		liste = [ int(x) for x in liste]		
 		
 

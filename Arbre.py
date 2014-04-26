@@ -21,12 +21,15 @@ class Arbre():
 		self.noeud.construire_fichier_arbre(liste)
 
 	def getPoids(self):
+		""" Retourne le poids total de l'arbre """
 		return self.noeud.getPoids()
 
 	def afficher(self,canvas):
+		""" Affiche l'arbre"""
 		self.noeud.afficher(canvas,700,50,600)
 
 	def getObjPoids(self):
+		""" Permet de recuperer la liste des poids (en tant qu'objet)"""
 		if self.noeud == None:
 			return '[]'
 		else:
