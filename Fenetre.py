@@ -23,6 +23,10 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.menuoutil.add_command(label="Modifier les valeurs", command=self.modif_val)
 		self.menubar.add_cascade(label="Outils", menu=self.menuoutil)
 
+		self.menuapropos = Menu(self.menubar, tearoff=0)
+		self.menuapropos.add_command(label="A propos", command=self.afficher_apropos)
+		self.menubar.add_cascade(label="A propos", menu=self.menuapropos)
+
 		self.v = IntVar()
 		self.v.set(1)
 		self.menuoption = Menu(self.menubar, tearoff=0)
@@ -42,7 +46,11 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.frame.pack(fill=BOTH, expand=1)
 		self.canvas.pack(fill=BOTH, expand=1)
 		self.arbre = Arbre() # On crée un arbre nulle
-
+	def afficher_apropos(self):
+		apropos = Toplevel(self)
+		apropos.title("A propos")
+		label = Label(apropos, text="Construction de Mobiles \n - LS4 - \n Jérome BETTINELLI - Thomas HAUTIER \n 2013-2014")
+		label.pack()
 	def ouvrir_ficher(self):
 
 		fichier = filedialog.askopenfile(parent=self, title="Ouvrir un mobile")
