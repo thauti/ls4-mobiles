@@ -32,4 +32,4 @@ class Mobile():
 
 	def getObjPoids(self,liste):
 		""" Retourne l'objet """
-			liste.extend([self])
+		liste.extend([self])

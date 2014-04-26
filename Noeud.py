@@ -56,5 +56,5 @@ class Noeud():
 
 	def getObjPoids(self,liste):
 		""" Retourne les objets de ses fils"""
-			self.n_gauche.getObjPoids(liste)
-			self.n_droit.getObjPoids(liste)
+		self.n_gauche.getObjPoids(liste)
+		self.n_droit.getObjPoids(liste)
