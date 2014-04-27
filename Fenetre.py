@@ -201,7 +201,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.arbre.afficher(self.canvas)
 
 	def mode_1(self,liste) :
-		""" Algo 1 : """
+		""" Algo 1 : Algo simple sans traitement """
 		if len(liste) <= 2 :
 			return liste
 		milieu = len(liste)//2
@@ -211,7 +211,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 			return [self.mode_1(liste[:milieu]),self.mode_1(liste[milieu:])]
 
 	def mode_2(self,liste) :
-		""" Algo 2 : """
+		""" Algo 2 : Découpage en 2 listes et affichage des poids les plus lourds à gauche """
 		liste = [ int(x) for x in liste]
 		liste.sort()
 		
@@ -233,7 +233,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 
 	def mode_3(self,liste):
-		""" Algo 3 : """
+		""" Algo 3 : Reprise de l'algo 2 en alternant l'emplacement du poids le plus lourd """
 		liste = [ int(x) for x in liste]
 		liste.sort()
 		
@@ -263,7 +263,7 @@ class Fenetre(Tk): #Héritage depuis Tk
 
 
 	def aleatoire (self) :
-		""" Géneration d'un arbre aleatoire"""
+		""" Géneration d'un arbre aleatoire """
 		liste=[random.randrange(1,150) for i in range(random.randrange(2,20))]
 		n=random.randrange(1,4)
 		if n==1 :
@@ -279,13 +279,14 @@ class Fenetre(Tk): #Héritage depuis Tk
 		self.afficher_arbre()
 
 	def mode_4(self,liste) :
-		""" Algo 4 : """
+		""" Algo 4 : Equilibrage de l'arbre au niveau des poids """
 		liste = [ int(x) for x in liste]		
 		
 
 		return self.traitement_mode_4(liste)
 
 	def traitement_mode_4(self,liste) :
+		
 		if len(liste)<2 :
 			return liste[0]
 
